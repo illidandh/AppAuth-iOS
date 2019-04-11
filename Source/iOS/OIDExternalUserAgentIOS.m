@@ -116,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
           NSError *safariError =
               [OIDErrorUtilities errorWithCode:OIDErrorCodeUserCanceledAuthorizationFlow
                                underlyingError:error
-                                   description:@"User cancelled."];
+                                   description:@"404"];
           [strongSelf->_session failExternalUserAgentFlowWithError:safariError];
         }
       }];
