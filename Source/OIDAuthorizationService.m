@@ -103,7 +103,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)resumeExternalUserAgentFlowWithURL:(NSURL *)URL {
   // rejects URLs that don't match redirect (these may be completely unrelated to the authorization)
   if (![self shouldHandleURL:URL]) {
-    return NO;
+    NSMutableDictionary* details = [NSMutableDictionary dictionary];
+    [details setValue:@"404" forKey:NSLocalizedDescriptionKey];
+    NSError *error = [NSError errorWithDomain:OIDOAuthAuthorizationErrorDomain
+                                         code:OIDErrorCodeOAuthAuthorizationClientError
+                                     userInfo:details];
+    [self didFinishWithResponse:nil error:error];
+    return YES;
   }
   
   AppAuthRequestTrace(@"Authorization Response: %@", URL);
